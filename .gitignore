@@ -1,0 +1,10 @@
+.direnv/
+.env
+.tfvars
+.terraform
+*.tfstate
+*.tfstate.*
+*.tfstate.backup
+*.tfplan
+crash.log
+crash.*.log
