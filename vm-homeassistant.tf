@@ -3,11 +3,6 @@ import {
   id = "betelgeuse/101"
 }
 
-data "proxmox_virtual_environment_vm" "vm101" {
-  node_name = "betelgeuse"
-  vm_id     = 101
-}
-
 resource "proxmox_virtual_environment_vm" "homeassistant" {
   name = "homeassistant"
   tags = [
