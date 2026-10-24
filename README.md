@@ -1,6 +1,6 @@
 # Havamal
 
-OpenTofu configuration for managing VMs and LXC containers on a Proxmox VE host, using the [bpg/proxmox](https://search.opentofu.org/provider/bpg/proxmox/latest/) provider.
+OpenTofu configuration for managing VMs and LXC containers on a Proxmox VE host, using the [bpg/proxmox](https://github.com/bpg/terraform-provider-proxmox) provider.
 
 > [!WARNING]
 > This is a personal learning projoct.
