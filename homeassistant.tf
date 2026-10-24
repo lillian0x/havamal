@@ -79,15 +79,3 @@ resource "proxmox_virtual_environment_vm" "homeassistant" {
     device = "socket"
   }
 }
-
-output "vm101_name" {
-  value = data.proxmox_virtual_environment_vm.vm101.name
-}
-
-output "vm101_id" {
-  value = data.proxmox_virtual_environment_vm.vm101.vm_id
-}
-
-output "vm101_node" {
-  value = data.proxmox_virtual_environment_vm.vm101.node_name
-}
