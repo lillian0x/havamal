@@ -39,10 +39,15 @@ resource "proxmox_virtual_environment_vm" "llm" {
   }
 
   hostpci {
-    device = "hostpci0"
-    id     = "0000:01:00"
-    pcie   = false
-    rombar = true
+    device  = "hostpci0"
+    mapping = proxmox_virtual_environment_hardware_mapping_pci.gpu.name
+    pcie    = false
+  }
+
+  hostpci {
+    device  = "hostpci1"
+    mapping = proxmox_virtual_environment_hardware_mapping_pci.gpu_audio.name
+    pcie    = false
   }
 
   lifecycle {
