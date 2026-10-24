@@ -63,6 +63,7 @@ resource "proxmox_virtual_environment_vm" "nfs_host" {
 
   lifecycle {
     prevent_destroy = true
+    ignore_changes  = [initialization]
   }
 }
 
