@@ -20,6 +20,18 @@ locals {
       }
     }
   }) }
+  cni_patch = [
+    yamlencode({
+      apiVersion = "v1alpha1"
+      kind       = "KubeFlannelCNIConfig"
+      "$patch"   = "delete"
+    }),
+    yamlencode({
+      apiVersion = "v1alpha1"
+      kind       = "KubeProxyConfig"
+      enabled    = false
+    }),
+  ]
   longhorn_volume_patch = { for k, v in var.nodes : k => yamlencode({
     apiVersion = "v1alpha1"
     kind       = "UserVolumeConfig"
@@ -57,9 +69,9 @@ locals {
   }) if v.role == "controlplane" }
   node_patches = { for k, v in var.nodes : k => concat(
     [local.hostname_patch[k], local.install_patch[k]],
+    v.role == "controlplane" ? local.cni_patch : [],
     compact([lookup(local.vip_patch, k, "")]),
     contains(keys(local.longhorn_volume_patch), k) ? [local.longhorn_volume_patch[k]] : [],
-    # local.fw_rules[v.role],
   ) }
 }
 
@@ -111,7 +123,7 @@ data "talos_cluster_health" "this" {
   control_plane_nodes  = local.cp_ips
   worker_nodes         = local.worker_ips
   endpoints            = local.cp_ips
-  depends_on           = [talos_machine_bootstrap.this]
+  depends_on           = [helm_release.cilium]
 }
 
 resource "talos_cluster_kubeconfig" "this" {
