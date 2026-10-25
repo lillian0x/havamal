@@ -20,6 +20,28 @@ locals {
       }
     }
   }) }
+  longhorn_volume_patch = { for k, v in var.nodes : k => yamlencode({
+    apiVersion = "v1alpha1"
+    kind       = "UserVolumeConfig"
+    name       = "longhorn"
+    provisioning = {
+      diskSelector = { match = "!system_disk" }
+      minSize      = "50GB"
+    }
+  }) if v.role == "worker" }
+
+  longhorn_kubelet_patch = { for k, v in var.nodes : k => yamlencode({
+    machine = {
+      kubelet = {
+        extraMounts = [{
+          destination = "/var/mnt/longhorn"
+          type        = "bind"
+          source      = "/var/mnt/longhorn"
+          options     = ["bind", "rshared", "rw"]
+        }]
+      }
+    }
+  }) if v.role == "worker" }
   vip_patch = { for k, v in var.nodes : k => yamlencode({
     machine = {
       network = {
@@ -36,6 +58,7 @@ locals {
   node_patches = { for k, v in var.nodes : k => concat(
     [local.hostname_patch[k], local.install_patch[k]],
     compact([lookup(local.vip_patch, k, "")]),
+    contains(keys(local.longhorn_volume_patch), k) ? [local.longhorn_volume_patch[k]] : [],
     # local.fw_rules[v.role],
   ) }
 }

@@ -29,6 +29,18 @@ resource "proxmox_virtual_environment_vm" "node" {
     discard      = "on"
   }
 
+  dynamic "disk" {
+    for_each = each.value.role == "worker" ? [1] : []
+    content {
+      datastore_id = var.datastore
+      interface    = "scsi1"
+      size         = 100
+      iothread     = true
+      discard      = "on"
+      file_format  = "raw"
+    }
+  }
+
   network_device {
     bridge   = "vmbr0"
     vlan_id  = 20
