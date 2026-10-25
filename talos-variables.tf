@@ -2,7 +2,7 @@ variable "pve_node" { default = "betelgeuse" }
 variable "datastore" { default = "local-lvm" }
 variable "talos_version" { default = "v1.14.4" }
 variable "cluster_name" { default = "talos" }
-variable "gateway" { default = "192.168.20.1" }
+variable "gateway" { default = "192.168.20.254" }
 variable "vip_endpoint" { default = "192.168.20.100" }
 
 variable "nodes" {
