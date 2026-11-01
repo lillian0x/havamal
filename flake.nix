@@ -46,6 +46,7 @@
           buildInputs = with pkgs;
             [
               opentofu
+              terraform-ls
             ]
             ++ config.pre-commit.settings.enabledPackages;
         };
