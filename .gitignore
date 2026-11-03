@@ -1,5 +1,7 @@
 .direnv/
 .env
+.pre-commit-config.yaml
+# terraform
 .tfvars
 .terraform
 *.tfstate
