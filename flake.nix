@@ -34,13 +34,19 @@
           };
         };
         pre-commit.settings.hooks = {
-          alejandra.enable = true;
+          alejandra = {
+            enable = true;
+            settings.verbosity = "quiet";
+          };
           terraform-format.enable = true;
           terraform-validate.enable = true;
         };
-        formatter = pkgs.writeShellScriptBin "pre-commit-run" ''
-          ${pkgs.lib.getExe config.pre-commit.settings.package} run --all-files --config ${config.pre-commit.settings.configFile}
-        '';
+        formatter = let
+          inherit (config.pre-commit.settings) configFile package;
+        in
+          pkgs.writeShellScriptBin "pre-commit-run" ''
+            ${pkgs.lib.getExe package} run --all-files --config ${configFile}
+          '';
         devShells.default = pkgs.mkShell {
           inherit (config.pre-commit) shellHook;
           buildInputs = with pkgs;
