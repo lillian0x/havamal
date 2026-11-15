@@ -16,7 +16,7 @@ resource "proxmox_virtual_environment_container" "adguard" {
 
   disk {
     datastore_id = "local-lvm"
-    size         = 1
+    size         = 2
   }
 
   features {
