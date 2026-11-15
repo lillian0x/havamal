@@ -1,7 +1,7 @@
 {
   description = "flux manifests repo with pre-commit hooks";
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     systems.url = "github:nix-systems/default";
     flake-parts.url = "github:hercules-ci/flake-parts";
     git-hooks.url = "github:cachix/git-hooks.nix";
