@@ -17,7 +17,7 @@ resource "proxmox_virtual_environment_vm" "k3s_worker_3" {
   }
 
   memory {
-    dedicated = 4096
+    dedicated = 8192
   }
 
   scsi_hardware = "virtio-scsi-single"
